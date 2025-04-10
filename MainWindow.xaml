@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Overlay_Timer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Timer"
+        Height="72" Width="144"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False">
+  <Border Background="#F0000000">
+    <TextBlock x:Name="TimerText"
+                   FontSize="56"
+                   Foreground="CadetBlue"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,-8,0,0"/>
+  </Border>
 </Window>
