@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Overlay_Timer
@@ -34,20 +34,17 @@ namespace Overlay_Timer
 
     private void CreateTrayIcon()
     {
-      TrayIcon = new NotifyIcon
-      {
-        Visible = true,
-        Text = Title
-      };
-
       var menu = new ContextMenuStrip();
       menu.Items.Add("Open", null, (s, e) => ShowMainWindow());
       menu.Items.Add("Hide", null, (s, e) => HideMainWindow());
       menu.Items.Add("Exit", null, (s, e) => Close());
 
-      TrayIcon.ContextMenuStrip = menu;
-      TrayIcon.Icon = SystemIcons.Application;
+      TrayIcon = new NotifyIcon();
+      TrayIcon.Text = Title;
+      TrayIcon.Visible = true;
       TrayIcon.MouseClick += (s, e) => OnMouseClick(e);
+      TrayIcon.ContextMenuStrip = menu;
+      TrayIcon.Icon = IconHelper.DrawingImageToIcon((DrawingImage)Icon, 256, 256);
     }
 
     private void OnMouseClick(System.Windows.Forms.MouseEventArgs e)
