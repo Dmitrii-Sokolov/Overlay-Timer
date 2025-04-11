@@ -7,15 +7,31 @@ namespace OverlayTimer
 {
   public partial class MainWindow : Window
   {
+    private DateTime PeriodStart;
+    private DateTime PeriodEnd;
+    private DateTime AlarmEnd;
+    private TimeSpan PeriodDuration;
+
     public MainWindow()
     {
       InitializeComponent();
+
+      InitializeTime();
 
       CreateTrayIcon();
 
       SizeChanged += (s, e) => UpdateTimer();
 
       Loaded += (s, e) => ScheduleRenderUpdates();
+    }
+
+    private void InitializeTime()
+    {
+      PeriodStart = DateTime.Today.AddHours(8).AddMinutes(40);
+      PeriodEnd = DateTime.Today.AddHours(15).AddMinutes(40);
+      AlarmEnd = PeriodEnd.AddMinutes(20);
+
+      PeriodDuration = PeriodEnd - PeriodStart;
     }
 
     private void CreateTrayIcon() => new TrayIcon(this);
@@ -30,20 +46,21 @@ namespace OverlayTimer
 
     private void UpdateTimer()
     {
-      UpdateClock();
-      UpdateProgressBar();
+      var remainingTime = PeriodEnd - DateTime.Now;
+
+      UpdateClock(remainingTime);
+      UpdateProgressBar(remainingTime);
     }
 
-    private void UpdateClock()
+    private void UpdateClock(TimeSpan remainingTime)
     {
-      TimerText.Text = DateTime.Now.ToString("HH:mm");
+      TimerText.Text = remainingTime.ToString(@"hh\:mm");
     }
 
-    private void UpdateProgressBar()
+    private void UpdateProgressBar(TimeSpan remainingTime)
     {
-      var frac = DateTime.Now.Second / 60d;
-
-      UpdateFillArc(frac);
+      var fraction = remainingTime.TotalMilliseconds / PeriodDuration.TotalMilliseconds;
+      UpdateFillArc(fraction);
     }
 
     private void UpdateFillArc(double fraction)
