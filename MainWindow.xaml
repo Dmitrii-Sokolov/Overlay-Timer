@@ -13,17 +13,26 @@
         Topmost="True"
         ResizeMode="CanMinimize"
         ShowInTaskbar="False">
+  
   <Border Background="#F0000000">
     <Grid>
-      <Path x:Name="FillArc"
-          Fill="#66FFFFFF"
-          StrokeThickness="5"/>
+      <Ellipse x:Name="ArcBack"
+               Width="160" Height="160"
+               Stroke="DarkRed"
+               StrokeThickness="6"/>
+
+      <Path x:Name="ArcFill"
+            Stroke="White"
+            StrokeThickness="6"
+            StrokeStartLineCap="Round"
+            StrokeEndLineCap="Round"/>
+
       <TextBlock x:Name="TimerText"
-                     FontSize="56"
-                     Foreground="CadetBlue"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"
-                     Margin="0,-8,0,0"/>
+                 FontSize="56"
+                 Foreground="CadetBlue"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Margin="0,-8,0,0"/>
     </Grid>
   </Border>
 

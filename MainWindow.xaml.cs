@@ -12,24 +12,23 @@ namespace Overlay_Timer
   /// </summary>
   public partial class MainWindow : Window
   {
-    private readonly DispatcherTimer Timer;
-
-    private NotifyIcon TrayIcon;
-
     public MainWindow()
     {
       InitializeComponent();
 
-      Timer = new DispatcherTimer
-      {
-        Interval = TimeSpan.FromSeconds(1)
-      };
-
-      Timer.Tick += OnTimerTick;
-      Timer.Start();
-
-      UpdateClock();
+      InitializeTimer();
       CreateTrayIcon();
+
+      UpdateTimer();
+
+      var timer = new DispatcherTimer();
+      timer.Interval = TimeSpan.FromSeconds(1);
+      timer.Tick += (s, e) => UpdateTimer();
+      timer.Start();
+    }
+
+    private void InitializeTimer()
+    {
     }
 
     private void CreateTrayIcon()
@@ -39,12 +38,12 @@ namespace Overlay_Timer
       menu.Items.Add("Hide", null, (s, e) => HideMainWindow());
       menu.Items.Add("Exit", null, (s, e) => Close());
 
-      TrayIcon = new NotifyIcon();
-      TrayIcon.Text = Title;
-      TrayIcon.Visible = true;
-      TrayIcon.MouseClick += (s, e) => OnMouseClick(e);
-      TrayIcon.ContextMenuStrip = menu;
-      TrayIcon.Icon = IconHelper.DrawingImageToIcon((DrawingImage)Icon, 256, 256);
+      var trayIcon = new NotifyIcon();
+      trayIcon.Text = Title;
+      trayIcon.Visible = true;
+      trayIcon.MouseClick += (s, e) => OnMouseClick(e);
+      trayIcon.ContextMenuStrip = menu;
+      trayIcon.Icon = IconHelper.DrawingImageToIcon((DrawingImage)Icon, 256, 256);
     }
 
     private void OnMouseClick(System.Windows.Forms.MouseEventArgs e)
@@ -66,7 +65,7 @@ namespace Overlay_Timer
       DragMove();
     }
 
-    private void OnTimerTick(object sender, EventArgs e)
+    private void UpdateTimer()
     {
       UpdateClock();
       UpdateProgressBar();
@@ -98,8 +97,7 @@ namespace Overlay_Timer
 
       var largeArc = sweep > 180;
 
-      var fig = new PathFigure { StartPoint = center, IsClosed = true };
-      fig.Segments.Add(new LineSegment(p1, true));
+      var fig = new PathFigure { StartPoint = p1, IsClosed = false };
       fig.Segments.Add(new ArcSegment(
           p2,
           new Size(radius, radius),
@@ -108,7 +106,7 @@ namespace Overlay_Timer
           SweepDirection.Clockwise,
           true));
 
-      FillArc.Data = new PathGeometry(new[] { fig });
+      ArcFill.Data = new PathGeometry(new[] { fig });
     }
 
     private static Point PointOnCircle(Point center, double radius, double angleDegrees)
