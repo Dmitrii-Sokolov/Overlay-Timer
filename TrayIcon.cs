@@ -6,6 +6,8 @@ namespace OverlayTimer
 {
   public class TrayIcon
   {
+    private bool Visible = true;
+
     public Window Window { get; }
 
     public TrayIcon(Window window)
@@ -13,7 +15,7 @@ namespace OverlayTimer
       Window = window;
 
       var menu = new ContextMenuStrip();
-      menu.Items.Add("Open", null, (s, e) => ShowWindow());
+      menu.Items.Add("Show", null, (s, e) => ShowWindow());
       menu.Items.Add("Hide", null, (s, e) => HideWindow());
       menu.Items.Add("Exit", null, (s, e) => Window.Close());
 
@@ -31,13 +33,28 @@ namespace OverlayTimer
         SwitchWindow();
     }
 
-    private void SwitchWindow() =>
-      Window.WindowState = Window.WindowState == WindowState.Normal
-      ? WindowState.Minimized
-      : WindowState.Normal;
+    private void SwitchWindow()
+    {
+      if (Visible)
+      {
+        HideWindow();
+      }
+      else
+      {
+        ShowWindow();
+      }
+    }
 
-    private void ShowWindow() => Window.WindowState = WindowState.Normal;
+    private void ShowWindow()
+    {
+      Visible = true;
+      Window.Show();
+    }
 
-    private void HideWindow() => Window.WindowState = WindowState.Minimized;
+    private void HideWindow()
+    {
+      Visible = false;
+      Window.Hide();
+    }
   }
 }
