@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Overlay_Timer.Properties
+namespace OverlayTimer.Properties
 {
 
 

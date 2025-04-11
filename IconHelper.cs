@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Overlay_Timer
+namespace OverlayTimer
 {
   public static class IconHelper
   {
