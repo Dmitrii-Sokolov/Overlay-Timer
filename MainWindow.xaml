@@ -1,12 +1,12 @@
-﻿<Window x:Class="Overlay_Timer.MainWindow"
+﻿<Window x:Class="OverlayTimer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Overlay_Timer"
+        xmlns:local="clr-namespace:OverlayTimer"
         mc:Ignorable="d"
         Title="Overlay Timer"
-        Height="200" Width="200"
+        Height="144" Width="144"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
@@ -15,9 +15,8 @@
         ShowInTaskbar="False">
   
   <Border Background="#F0000000">
-    <Grid>
+    <Grid x:Name="Content" Margin="10 10 10 10">
       <Ellipse x:Name="ArcBack"
-               Width="160" Height="160"
                Stroke="DarkRed"
                StrokeThickness="6"/>
 
@@ -27,12 +26,19 @@
             StrokeStartLineCap="Round"
             StrokeEndLineCap="Round"/>
 
-      <TextBlock x:Name="TimerText"
-                 FontSize="56"
-                 Foreground="CadetBlue"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"
-                 Margin="0,-8,0,0"/>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*"/>
+          <ColumnDefinition Width="12*"/>
+          <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Viewbox Stretch="Uniform" Margin="0,-8,0,0" Grid.Column="1">
+          <TextBlock x:Name="TimerText"
+                     Foreground="CadetBlue"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+        </Viewbox>
+      </Grid>
     </Grid>
   </Border>
 
