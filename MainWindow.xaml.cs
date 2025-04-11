@@ -69,11 +69,54 @@ namespace Overlay_Timer
     private void OnTimerTick(object sender, EventArgs e)
     {
       UpdateClock();
+      UpdateProgressBar();
     }
 
     private void UpdateClock()
     {
       TimerText.Text = DateTime.Now.ToString("HH:mm");
+    }
+
+    private void UpdateProgressBar()
+    {
+      var frac = DateTime.Now.Second / 60f;
+
+      UpdateFillArc(frac);
+    }
+
+    private void UpdateFillArc(double fraction)
+    {
+      var center = new Point(100, 100);
+      double radius = 80;
+
+      var sweep = 360 * Math.Max(0, Math.Min(1, fraction));
+      double startAngle = -90;
+      var endAngle = startAngle + sweep;
+
+      var p1 = PointOnCircle(center, radius, startAngle);
+      var p2 = PointOnCircle(center, radius, endAngle);
+
+      var largeArc = sweep > 180;
+
+      var fig = new PathFigure { StartPoint = center, IsClosed = true };
+      fig.Segments.Add(new LineSegment(p1, true));
+      fig.Segments.Add(new ArcSegment(
+          p2,
+          new Size(radius, radius),
+          0,
+          largeArc,
+          SweepDirection.Clockwise,
+          true));
+
+      FillArc.Data = new PathGeometry(new[] { fig });
+    }
+
+    private static Point PointOnCircle(Point center, double radius, double angleDegrees)
+    {
+      var rad = angleDegrees * Math.PI / 180.0;
+      return new Point(
+          center.X + (radius * Math.Cos(rad)),
+          center.Y + (radius * Math.Sin(rad)));
     }
   }
 }

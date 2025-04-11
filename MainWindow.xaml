@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Overlay_Timer"
         mc:Ignorable="d"
         Title="Overlay Timer"
-        Height="72" Width="144"
+        Height="200" Width="200"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
@@ -14,12 +14,17 @@
         ResizeMode="CanMinimize"
         ShowInTaskbar="False">
   <Border Background="#F0000000">
-    <TextBlock x:Name="TimerText"
-                   FontSize="56"
-                   Foreground="CadetBlue"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0,-8,0,0"/>
+    <Grid>
+      <Path x:Name="FillArc"
+          Fill="#66FFFFFF"
+          StrokeThickness="5"/>
+      <TextBlock x:Name="TimerText"
+                     FontSize="56"
+                     Foreground="CadetBlue"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Margin="0,-8,0,0"/>
+    </Grid>
   </Border>
 
   <Window.Icon>
