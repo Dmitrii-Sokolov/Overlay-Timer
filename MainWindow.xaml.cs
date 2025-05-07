@@ -59,7 +59,7 @@ namespace OverlayTimer
 
     private void UpdateProgressBar(TimeSpan remainingTime)
     {
-      var fraction = remainingTime.TotalMilliseconds / PeriodDuration.TotalMilliseconds;
+      var fraction = Math.Max(remainingTime.TotalMilliseconds / PeriodDuration.TotalMilliseconds, 0);
       UpdateFillArc(fraction);
     }
 
