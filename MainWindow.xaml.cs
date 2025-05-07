@@ -12,6 +12,12 @@ namespace OverlayTimer
     private DateTime AlarmEnd;
     private TimeSpan PeriodDuration;
 
+    //TODO Add Alarm
+    //TODO Add period tuning
+    //TODO Add weekday tuning
+    //TODO Add click transparency
+    //TODO Add GitHub build
+
     public MainWindow()
     {
       InitializeComponent();
